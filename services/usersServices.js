@@ -1,6 +1,7 @@
 const User = require('../models/users');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Task = require('../models/tasks');
 
 const addUser = async (userData) =>{
     try{
@@ -37,7 +38,8 @@ const updateUser = async (userData,id) =>{
 const deleteUser = async (id) =>{
     try{
       const user = await User.findByIdAndDelete(id);
-      return {user};
+      const task = await Task.deleteMany({owner: id});
+      return {user, task};
     }
     catch(err){
         return {error: err}

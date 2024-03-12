@@ -3,7 +3,7 @@ const { addController, updateController, deleteController ,getController } = req
 const { verifyToken } = require('../middlewares/jwt');
 
 taskRouter.post('/addtasks', verifyToken, addController);
-taskRouter.get('/gettasks', getController);
+taskRouter.get('/gettasks', verifyToken, getController);
 taskRouter.put('/updatetask/:id', updateController);
 taskRouter.delete('/deletetask/:id', deleteController);
 

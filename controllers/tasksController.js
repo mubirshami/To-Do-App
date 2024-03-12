@@ -17,7 +17,8 @@ const addController = async (req, res) => {
 
 const getController = async (req, res) => { 
     try {
-        const result = await getTask();
+        const userid = req.user.id;
+        const result = await getTask(userid);
         if (result.error) {
             return res.status(400).json({ error: result.error });
         }

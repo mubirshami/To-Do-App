@@ -13,9 +13,12 @@ const addTask = async (taskData,id) =>{
     }
 };
 
-const getTask = async () =>{
+const getTask = async (id) =>{
     try{
-        const task = await Task.find();
+        const task = await Task.find({owner: id});
+        if(!task){
+            return {error: "Task Not Found"}
+        }
         return {task};
     }
     catch(err){

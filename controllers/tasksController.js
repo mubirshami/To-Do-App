@@ -2,8 +2,9 @@ const {addTask, updateTask, deleteTask, getTask} = require('../services/taskServ
 
 const addController = async (req, res) => {
     try {
+        const userid = req.user.id;
         const data = req.body;
-        const result = await addTask(data);
+        const result = await addTask(data,userid);
 
         if (result.error) {
             res.status(400).json({ error: result.error });

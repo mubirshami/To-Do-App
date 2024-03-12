@@ -2,9 +2,9 @@ const Task = require('../models/tasks');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const addTask = async (taskData) =>{
+const addTask = async (taskData,id) =>{
     try{
-        const taskModal = new Task(taskData);
+        const taskModal = new Task({...taskData, owner: id});
         const task = await taskModal.save();
         return {task};
     }

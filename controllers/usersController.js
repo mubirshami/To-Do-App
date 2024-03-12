@@ -31,7 +31,7 @@ const getController = async (req, res) => {
 
 const updateController = async (req, res) => {
     try {
-        const id = req.params.id;
+        const id = req.user.id;
         const data = req.body;
         const result = await updateUser(data,id);
         if (result.error) {

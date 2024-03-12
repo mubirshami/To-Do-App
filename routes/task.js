@@ -4,7 +4,7 @@ const { verifyToken } = require('../middlewares/jwt');
 
 taskRouter.post('/addtasks', verifyToken, addController);
 taskRouter.get('/gettasks', verifyToken, getController);
-taskRouter.put('/updatetask/:id', updateController);
-taskRouter.delete('/deletetask/:id', deleteController);
+taskRouter.put('/updatetask/:id',verifyToken, updateController);
+taskRouter.delete('/deletetask/:id',verifyToken, deleteController);
 
 module.exports = taskRouter;

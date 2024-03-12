@@ -30,10 +30,11 @@ const getController = async (req, res) => {
 }
 
 const updateController = async (req, res) => {  
-    try {
+    try {const userid = req.user.id;
+        console.log(userid);
         const id = req.params.id;
         const data = req.body;
-        const result = await updateTask(data,id);
+        const result = await updateTask(userid,data,id);
         if (result.error) {
             return res.status(400).json({ error: result.error });
         }
@@ -46,8 +47,9 @@ const updateController = async (req, res) => {
 
 const deleteController = async (req, res) => {
     try {
+        const userid = req.user.id;
         const id = req.params.id;
-        const result = await deleteTask(id);
+        const result = await deleteTask(userid,id);
         if (result.error) {
             return res.status(400).json({ error: result.error });
         }

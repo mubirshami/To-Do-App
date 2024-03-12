@@ -26,9 +26,9 @@ const getTask = async (id) =>{
     }
 }
 
-const updateTask = async (taskData,id) =>{
+const updateTask = async (userid,taskData,id) =>{
     try{
-        const task = await Task.findByIdAndUpdate(id, taskData, {new: true});   
+        const task = await Task.findOneAndUpdate({_id: id, owner: userid}, taskData, {new: true})
         if(!task){
             return {error: "Task Not Found"}
         }
@@ -39,9 +39,9 @@ const updateTask = async (taskData,id) =>{
     }
 }
 
-const deleteTask = async (id) =>{
+const deleteTask = async (userid,id) =>{
     try{
-        const task = await Task.findByIdAndDelete(id);
+        const task = await Task.findByIdAndDelete({owner: userid, _id: id});
         if(!task){
             return {error: "Task Not Found"}
         }

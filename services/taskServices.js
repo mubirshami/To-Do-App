@@ -13,9 +13,9 @@ const addTask = async (taskData,id) =>{
     }
 };
 
-const getTask = async (id) =>{
+const getTask = async (id, sort) =>{
     try{
-        const task = await Task.find({owner: id});
+        const task = await Task.find({ owner: id }).limit(2).skip(0).sort(sort);
         if(!task){
             return {error: "Task Not Found"}
         }

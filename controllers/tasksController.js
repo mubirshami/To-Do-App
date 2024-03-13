@@ -17,8 +17,13 @@ const addController = async (req, res) => {
 
 const getController = async (req, res) => { 
     try {
+        const sort = {};
+        if (req.query.sortBy) {
+            const parts = req.query.sortBy.split(":");
+            sort[parts[0]] = parts[1] === "desc" ? -1 : 1;
+        }
         const userid = req.user.id;
-        const result = await getTask(userid);
+        const result = await getTask(userid,sort);
         if (result.error) {
             return res.status(400).json({ error: result.error });
         }

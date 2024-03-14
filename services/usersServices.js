@@ -64,4 +64,15 @@ const signIn = async (userData) =>{
     }
   };
 
-module.exports = { addUser, updateUser, deleteUser, getUser, signIn }
+const uploadAvatar = async (userData) =>{
+    try{
+      const user = await User.findById(userData.id);
+      user.avatar = userData.avatar;
+      await user.save();
+      return {user};
+    }
+    catch(err){
+        return {error: err}
+    }
+};
+module.exports = { addUser, updateUser, deleteUser, getUser, signIn, uploadAvatar }

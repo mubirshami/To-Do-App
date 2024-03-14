@@ -1,4 +1,5 @@
-const { signIn, addUser, updateUser , deleteUser, getUser} = require('../services/usersServices');
+const { signIn, addUser, updateUser , deleteUser, getUser,uploadAvatar } = require('../services/usersServices');
+const multer = require('multer');
 
 const addController = async (req, res) => {
     try {
@@ -72,4 +73,36 @@ const signinController = async (req, res) => {
     }
 }
 
-module.exports = { addController, updateController, deleteController, getController, signinController };
+const addAvatarController = async (req, res) => {
+    try {
+        const upload = multer({
+            dest: 'avatars', 
+            limits: {
+                fileSize: 1000000
+            },
+            fileFilter(req, file, cb) {
+                if (!file.originalname.match(/\.(png|jpg|jpeg)$/)) {
+                    return cb(new Error('Please upload a valid image file'));
+                }
+                cb(undefined, true);
+            }
+        });
+        upload.single('avatar')(req, res, async (err) => {
+            if (err) {
+                return res.status(400).send({ error: err.message });
+            }
+            const userData = {
+                id: req.user.id,
+                avatar: req.file.path
+            };
+            const result = await uploadAvatar(userData);
+            if (result.error) {
+                return res.status(400).send({ error: result.error.message });
+            }
+            res.send('Avatar uploaded successfully');
+        });
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+};
+module.exports = { addController, updateController, deleteController, getController, signinController, addAvatarController };

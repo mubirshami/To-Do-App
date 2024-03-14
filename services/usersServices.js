@@ -2,6 +2,7 @@ const User = require('../models/users');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Task = require('../models/tasks');
+const sharp = require('sharp');
 
 const addUser = async (userData) =>{
     try{
@@ -67,7 +68,8 @@ const signIn = async (userData) =>{
 const uploadAvatar = async (userData) =>{
     try{
       const user = await User.findById(userData.id);
-      user.avatar = userData.avatar;
+      const imageBuffer = await sharp(userData.avatar).resize({width: 150, height: 150}).png().toBuffer();
+      user.avatar = imageBuffer;
       await user.save();
       return {user};
     }

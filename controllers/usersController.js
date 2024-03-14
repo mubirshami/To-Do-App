@@ -7,12 +7,12 @@ const addController = async (req, res) => {
         const result = await addUser(data);
 
         if (result.error) {
-            return res.status(400).json({ error: result.error });
+            return res.status(400).json({ error: result.error.message });
         }
         res.status(201).json({ user: result.user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: err.message });
     }
 };
 
@@ -21,12 +21,12 @@ const getController = async (req, res) => {
         const user = req.user;
         const result = await getUser(user);
         if (result.error) {
-            return res.status(400).json({ error: result.error });
+            return res.status(400).json({ error: result.error.message });
         }
         res.status(200).json({ user: result.user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: err.message });
     }
 };
 
@@ -36,12 +36,12 @@ const updateController = async (req, res) => {
         const data = req.body;
         const result = await updateUser(data,id);
         if (result.error) {
-            return res.status(400).json({ error: result.error });
+            return res.status(400).json({ error: result.error.message });
         }
         res.status(201).json({ user: result.user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: err.message });
     }
 };
 
@@ -50,12 +50,12 @@ const deleteController = async (req, res) => {
         const id = req.user.id;
         const result = await deleteUser(id);
         if (result.error) {
-            return res.status(400).json({ error: result.error });
+            return res.status(400).json({ error: result.error.message });
         }
         res.status(200).json({ user: result.user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: err.message });
     }
 };
 
@@ -64,12 +64,11 @@ const signinController = async (req, res) => {
         const data = req.body;
         const result = await signIn(data);
         if (result.error) {
-            return res.status(400).json({ error: result.error });
+            return res.status(400).json({ error: result.error.message });
         }
         res.status(200).json({ user: result.user, message: "User Logged In", token: result.token });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ error: err.message });
     }
 }
 
@@ -102,7 +101,7 @@ const addAvatarController = async (req, res) => {
             res.send('Avatar uploaded successfully');
         });
     } catch (err) {
-        res.status(500).send(err.message);
+        res.status(500).send({err:err.message});
     }
 };
 module.exports = { addController, updateController, deleteController, getController, signinController, addAvatarController };

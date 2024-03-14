@@ -75,7 +75,6 @@ const signinController = async (req, res) => {
 const addAvatarController = async (req, res) => {
     try {
         const upload = multer({
-            dest: 'avatars', 
             limits: {
                 fileSize: 1000000
             },
@@ -92,7 +91,7 @@ const addAvatarController = async (req, res) => {
             }
             const userData = {
                 id: req.user.id,
-                avatar: req.file.path
+                avatar: req.file.buffer
             };
             const result = await uploadAvatar(userData);
             if (result.error) {

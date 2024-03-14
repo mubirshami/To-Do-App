@@ -88,4 +88,17 @@ const deleteAvatar = async (id) =>{
     }
 };
 
-module.exports = { addUser, updateUser, deleteUser, getUser, signIn, uploadAvatar, deleteAvatar }
+const getAvatar = async (id) =>{
+    try{
+      const user = await User.findById(id);
+      if(!user || !user.avatar){
+        throw new Error("No Avatar Exists");
+      }
+      return { avatar: user.avatar };
+    }
+    catch(err){
+        return {error: err}
+    }
+};
+
+module.exports = { addUser, updateUser, deleteUser, getUser, signIn, uploadAvatar, deleteAvatar, getAvatar }

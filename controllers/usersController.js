@@ -1,4 +1,4 @@
-const { signIn, addUser, updateUser , deleteUser, getUser,uploadAvatar } = require('../services/usersServices');
+const { signIn, addUser, updateUser , deleteUser, getUser,uploadAvatar, deleteAvatar } = require('../services/usersServices');
 const multer = require('multer');
 
 const addController = async (req, res) => {
@@ -103,4 +103,17 @@ const addAvatarController = async (req, res) => {
         res.status(500).send({err:err.message});
     }
 };
-module.exports = { addController, updateController, deleteController, getController, signinController, addAvatarController };
+
+const deleteAvatarController = async (req, res) => {
+    try {
+        const userid = req.user.id
+        const result = await deleteAvatar(userid);
+        if (result.error) {
+            return res.status(400).send({ error: result.error.message });
+        }
+        res.send('Avatar deleted successfully');
+    } catch (err) {
+        res.status(500).send({err:err.message});
+    }
+}
+module.exports = { addController, updateController, deleteController, getController, signinController, addAvatarController, deleteAvatarController };

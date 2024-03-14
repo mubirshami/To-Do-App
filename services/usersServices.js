@@ -75,4 +75,17 @@ const uploadAvatar = async (userData) =>{
         return {error: err}
     }
 };
-module.exports = { addUser, updateUser, deleteUser, getUser, signIn, uploadAvatar }
+
+const deleteAvatar = async (id) =>{
+    try{
+      const user = await User.findById(id);
+      user.avatar = undefined;
+      await user.save();
+      return {user};
+    }
+    catch(err){
+        return {error: err}
+    }
+};
+
+module.exports = { addUser, updateUser, deleteUser, getUser, signIn, uploadAvatar, deleteAvatar }

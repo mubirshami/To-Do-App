@@ -5,8 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "env-cmd -f ./config/.env nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "env-cmd -f ./config/.env nodemon app.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",

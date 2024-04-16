@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "env-cmd -f ./config/.env nodemon app.js",
-    "test": "jest"
+    "test": "env-cmd -f ./tests/test.env jest"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.3",
     "sharp": "^0.33.2",
+    "supertest": "^6.3.4",
     "validator": "^13.11.0"
   }
 }
